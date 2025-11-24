@@ -61,6 +61,7 @@ export default tseslint.config(
       "packages/env/src/fs/memfs/index.js",
       "packages/core/src/prompts/format.ts",
       "packages/core/src/node-parser/sentence_tokenizer.js",
+      "examples/data/*.xlsx",
     ],
   },
 );

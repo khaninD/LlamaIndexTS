@@ -1,4 +1,4 @@
-import { OpenAI } from "@llamaindex/openai";
+import { OpenAI, OpenAIEmbedding } from "@llamaindex/openai";
 import {
   extractText,
   getResponseSynthesizer,
@@ -13,7 +13,7 @@ Settings.chunkOverlap = 20;
 
 // Update llm
 Settings.llm = new OpenAI({ model: "gpt-4-turbo", maxTokens: 512 });
-
+Settings.embedModel = new OpenAIEmbedding();
 // Update callbackManager
 Settings.callbackManager.on("retrieve-end", (event) => {
   const { nodes, query } = event.detail;
@@ -36,6 +36,7 @@ async function main() {
     query: "Tell me more about Vincent van Gogh's famous paintings",
     stream: true,
   });
+  console.log("streaming response:", stream);
   for await (const chunk of stream) {
     process.stdout.write(chunk.response);
   }

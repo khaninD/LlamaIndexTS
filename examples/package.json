@@ -2,9 +2,17 @@
   "name": "@llamaindex/examples",
   "version": "0.3.43",
   "private": true,
+  "target": "node",
   "scripts": {
     "lint": "eslint .",
-    "start": "echo 'To get started, run `npx tsx <path to example>`'"
+    "start:mcp": "npx tsx ./mcp/new-server.ts",
+    "start:mcp-pg": "npx tsx ./mcp/pg-server.ts",
+    "start:client": "tsx ./mcp/client.ts",
+    "start:mcp:llama": "tsx ./mcp/llama-client.ts",
+    "build": "webpack --config ./webpack.config.js",
+    "build:dev": "webpack --config ./webpack.config.js --mode=development",
+    "start": "node dist/server.bundle.js",
+    "dev": "npm run build:dev && npm start"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.27",
@@ -18,7 +26,6 @@
     "@llamaindex/bm25-retriever": "^0.0.11",
     "@llamaindex/chroma": "^0.0.36",
     "@llamaindex/clip": "^0.0.77",
-    "llama-cloud-services": "^0.3.5",
     "@llamaindex/cohere": "^0.0.36",
     "@llamaindex/core": "^0.6.22",
     "@llamaindex/deepinfra": "^0.0.77",
@@ -26,6 +33,7 @@
     "@llamaindex/discord": "^0.1.21",
     "@llamaindex/elastic-search": "^0.1.22",
     "@llamaindex/env": "^0.1.30",
+    "@llamaindex/excel": "^0.1.22",
     "@llamaindex/firestore": "^1.0.29",
     "@llamaindex/fireworks": "^0.0.37",
     "@llamaindex/google": "^0.3.22",
@@ -57,25 +65,36 @@
     "@llamaindex/weaviate": "^0.0.37",
     "@llamaindex/workflow": "^1.1.24",
     "@llamaindex/xai": "^0.0.24",
+    "@modelcontextprotocol/sdk": "^1.22.0",
     "@notionhq/client": "^4.0.0",
     "@pinecone-database/pinecone": "^4.0.0",
+    "@types/better-sqlite3": "^7.6.13",
     "@vercel/postgres": "^0.10.0",
     "ai": "^5.0.39",
     "ajv": "^8.17.1",
+    "better-sqlite3": "^12.4.6",
     "commander": "^12.1.0",
     "dotenv": "^17.2.0",
     "js-tiktoken": "^1.0.14",
+    "llama-cloud-services": "^0.3.5",
     "llamaindex": "^0.12.0",
     "mongodb": "6.7.0",
     "postgres": "^3.4.4",
     "wikipedia": "^2.1.2",
-    "zod": "^4.1.5"
+    "zod": "^4.1.5",
+    "pg": "^8.16.3",
+    "@types/pg": "^8.15.6",
+    "mcp-client": "^1.13.1"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.13",
+    "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "webpack": "^5.88.0",
+    "webpack-cli": "^5.1.4",
+    "ts-loader": "^9.4.4"
   },
   "stackblitz": {
     "startCommand": "npm start"

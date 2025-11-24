@@ -1,0 +1,27 @@
+{
+  "docstore/data": {
+    "1b3a78d0-9b13-4be1-9507-6c400b65f403": {
+      "__data__": "{\"id_\":\"1b3a78d0-9b13-4be1-9507-6c400b65f403\",\"metadata\":{},\"excludedEmbedMetadataKeys\":[],\"excludedLlmMetadataKeys\":[],\"relationships\":{},\"text\":\"\\n      Vincent van Gogh was a Dutch post-impressionist painter who is among the most famous and influential figures in the history of Western art.\\n      Some of his most famous paintings include:\\n      - The Starry Night (1889) - Depicts a swirling night sky over a small town\\n      - Sunflowers (1888) - Series of still life paintings of sunflowers\\n      - The Potato Eaters (1885) - Early work showing peasant life\\n      - Irises (1889) - Painted while in an asylum in Saint-Rémy\\n      - The Bedroom (1888) - Depicts his bedroom in the Yellow House in Arles\\n      \\n      Van Gogh created about 2,100 artworks, including around 860 oil paintings, most of which date from the last two years of his life.\\n    \",\"textTemplate\":\"\",\"metadataSeparator\":\"\\n\",\"type\":\"DOCUMENT\",\"hash\":\"GdjRYDlgOA/qPwFSjCikp4dvN3JkTkIf5xJr5Yl6bS4=\"}",
+      "__type__": "DOCUMENT"
+    },
+    "f69c3337-8983-4779-8aa9-904953f5d54e": {
+      "__data__": "{\"id_\":\"f69c3337-8983-4779-8aa9-904953f5d54e\",\"metadata\":{},\"excludedEmbedMetadataKeys\":[],\"excludedLlmMetadataKeys\":[],\"relationships\":{\"SOURCE\":{\"nodeId\":\"1b3a78d0-9b13-4be1-9507-6c400b65f403\",\"metadata\":{},\"hash\":\"GdjRYDlgOA/qPwFSjCikp4dvN3JkTkIf5xJr5Yl6bS4=\"}},\"text\":\"Vincent van Gogh was a Dutch post-impressionist painter who is among the most famous and influential figures in the history of Western art.\\n      Some of his most famous paintings include:\\n      - The Starry Night (1889) - Depicts a swirling night sky over a small town\\n      - Sunflowers (1888) - Series of still life paintings of sunflowers\\n      - The Potato Eaters (1885) - Early work showing peasant life\\n      - Irises (1889) - Painted while in an asylum in Saint-Rémy\\n      - The Bedroom (1888) - Depicts his bedroom in the Yellow House in Arles\\n      \\n      Van Gogh created about 2,100 artworks, including around 860 oil paintings, most of which date from the last two years of his life.\",\"textTemplate\":\"\",\"startCharIdx\":7,\"endCharIdx\":703,\"metadataSeparator\":\"\\n\",\"type\":\"TEXT\",\"hash\":\"MCgQErRGCX4sKgA5KdQWTaQnxstkcdgMEnLLZOqxAOU=\"}",
+      "__type__": "TEXT"
+    }
+  },
+  "docstore/metadata": {
+    "1b3a78d0-9b13-4be1-9507-6c400b65f403": {
+      "docHash": "GdjRYDlgOA/qPwFSjCikp4dvN3JkTkIf5xJr5Yl6bS4="
+    },
+    "f69c3337-8983-4779-8aa9-904953f5d54e": {
+      "docHash": "MCgQErRGCX4sKgA5KdQWTaQnxstkcdgMEnLLZOqxAOU=",
+      "refDocId": "1b3a78d0-9b13-4be1-9507-6c400b65f403"
+    }
+  },
+  "docstore/ref_doc_info": {
+    "1b3a78d0-9b13-4be1-9507-6c400b65f403": {
+      "nodeIds": ["f69c3337-8983-4779-8aa9-904953f5d54e"],
+      "extraInfo": {}
+    }
+  }
+}

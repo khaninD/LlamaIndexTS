@@ -1,0 +1,30 @@
+{
+  "docstore/data": {
+    "2982b7e6-b55e-4c8e-894d-e94234b7ddee": {
+      "indexId": "2982b7e6-b55e-4c8e-894d-e94234b7ddee",
+      "nodesDict": {
+        "f69c3337-8983-4779-8aa9-904953f5d54e": {
+          "id_": "f69c3337-8983-4779-8aa9-904953f5d54e",
+          "metadata": {},
+          "excludedEmbedMetadataKeys": [],
+          "excludedLlmMetadataKeys": [],
+          "relationships": {
+            "SOURCE": {
+              "nodeId": "1b3a78d0-9b13-4be1-9507-6c400b65f403",
+              "metadata": {},
+              "hash": "GdjRYDlgOA/qPwFSjCikp4dvN3JkTkIf5xJr5Yl6bS4="
+            }
+          },
+          "text": "Vincent van Gogh was a Dutch post-impressionist painter who is among the most famous and influential figures in the history of Western art.\n      Some of his most famous paintings include:\n      - The Starry Night (1889) - Depicts a swirling night sky over a small town\n      - Sunflowers (1888) - Series of still life paintings of sunflowers\n      - The Potato Eaters (1885) - Early work showing peasant life\n      - Irises (1889) - Painted while in an asylum in Saint-Rémy\n      - The Bedroom (1888) - Depicts his bedroom in the Yellow House in Arles\n      \n      Van Gogh created about 2,100 artworks, including around 860 oil paintings, most of which date from the last two years of his life.",
+          "textTemplate": "",
+          "startCharIdx": 7,
+          "endCharIdx": 703,
+          "metadataSeparator": "\n",
+          "type": "TEXT",
+          "hash": "MCgQErRGCX4sKgA5KdQWTaQnxstkcdgMEnLLZOqxAOU="
+        }
+      },
+      "type": "simple_dict"
+    }
+  }
+}

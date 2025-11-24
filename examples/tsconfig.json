@@ -15,12 +15,11 @@
   "ts-node": {
     "files": true,
     "compilerOptions": {
-      "module": "commonjs"
+      "module": "es2015"
     }
   },
-  "include": ["./**/*.ts"],
+  "include": ["./mcp/new-server.ts", "./mcp/client.ts"],
   "exclude": [
-    "node_modules",
     "dist",
     "models/openai/live/browser/open-ai-realtime",
     "**/browser/**"

@@ -1,5 +1,5 @@
 // call pnpm tsx multimodal/load.ts first to init the storage
-import { OpenAI } from "@llamaindex/openai";
+import { OpenAI, OpenAIEmbedding } from "@llamaindex/openai";
 import {
   ContextChatEngine,
   extractText,
@@ -16,7 +16,9 @@ Settings.chunkOverlap = 20;
 
 // Update llm
 Settings.llm = new OpenAI({ model: "gpt-4-turbo", maxTokens: 512 });
-
+Settings.embedModel = new OpenAIEmbedding({
+  model: "text-embedding-ada-002",
+});
 // Update callbackManager
 Settings.callbackManager.on("retrieve-end", (event) => {
   const { nodes, query } = event.detail;
