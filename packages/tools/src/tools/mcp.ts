@@ -14,7 +14,13 @@ import {
   StreamableHTTPClientTransport,
   type StreamableHTTPClientTransportOptions,
 } from "@modelcontextprotocol/sdk/client/streamableHttp.js";
-import type { Tool } from "@modelcontextprotocol/sdk/types.js";
+import type {
+  GetPromptResult,
+  Prompt,
+  ReadResourceResult,
+  Resource,
+  Tool,
+} from "@modelcontextprotocol/sdk/types.js";
 import type { JSONSchemaType } from "ajv";
 
 interface ToolInput {
@@ -131,6 +137,22 @@ class MCPClient {
     return tools.tools;
   }
 
+  private async listPrompts(): Promise<Prompt[]> {
+    if (!this.connected) {
+      await this.connectToSever();
+    }
+    const prompts = await this.mcp.listPrompts();
+    return prompts.prompts;
+  }
+
+  private async listResources(): Promise<Resource[]> {
+    if (!this.connected) {
+      await this.connectToSever();
+    }
+    const resources = await this.mcp.listResources();
+    return resources.resources;
+  }
+
   async cleanup() {
     await this.mcp.close();
     this.transport?.close();
@@ -169,6 +191,63 @@ class MCPClient {
 
       return functionTool;
     });
+  }
+
+  /**
+   * Get the list of available prompts from the MCP server
+   */
+  async prompts(): Promise<Prompt[]> {
+    return await this.listPrompts();
+  }
+
+  /**
+   * Get a specific prompt from the MCP server
+   * @param name - The name of the prompt
+   * @param args - Optional arguments for the prompt
+   */
+  async getPrompt(
+    name: string,
+    args?: Record<string, string>,
+  ): Promise<GetPromptResult> {
+    if (!this.connected) {
+      await this.connectToSever();
+    }
+    if (this.verbose) {
+      console.log("Getting prompt:", name, "with args:", args);
+    }
+    const result = await this.mcp.getPrompt({
+      name,
+      arguments: args,
+    });
+    if (this.verbose) {
+      console.log("Prompt result:", result);
+    }
+    return result;
+  }
+
+  /**
+   * Get the list of available resources from the MCP server
+   */
+  async resources(): Promise<Resource[]> {
+    return await this.listResources();
+  }
+
+  /**
+   * Read the contents of a specific resource from the MCP server
+   * @param uri - The URI of the resource to read
+   */
+  async readResource(uri: string): Promise<ReadResourceResult> {
+    if (!this.connected) {
+      await this.connectToSever();
+    }
+    if (this.verbose) {
+      console.log("Reading resource:", uri);
+    }
+    const result = await this.mcp.readResource({ uri });
+    if (this.verbose) {
+      console.log("Resource result:", result);
+    }
+    return result;
   }
 }
 

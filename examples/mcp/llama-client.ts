@@ -1,6 +1,7 @@
 import { openai } from "@llamaindex/openai";
 import { mcp } from "@llamaindex/tools";
 import { agent } from "@llamaindex/workflow";
+import type { PromptMessage } from "@modelcontextprotocol/sdk/types.js";
 
 const server = mcp({
   command: "node",
@@ -9,22 +10,65 @@ const server = mcp({
 });
 
 async function main() {
-  // 3. Get tools from MCP server
   const tools = await server.tools();
-  // Now you can create an agent with the tools
+
+  // Получаем промпт с сервера
+  const promptResult = await server.getPrompt("json_response_required");
+
+  // Извлекаем текст промпта из сообщений
+  const serverPrompt = promptResult.messages
+    .map((msg: PromptMessage) => {
+      if (msg.content.type === "text") {
+        return msg.content.text;
+      }
+      return "";
+    })
+    .join("\n");
+
+  // Дополнительные инструкции для агента
+  const additionalInstructions = `
+Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных.
+
+Инструменты которые у тебя есть:
+- execute_sql - для выполнения SQL SELECT запросов
+- get_table_schema - для получения структуры таблицы
+- list_tables - для получения списка таблиц
+
+ВАЖНЫЕ ИНСТРУКЦИИ:
+1. Сначала используй list_tables чтобы узнать какие таблицы есть в базе
+2. Затем используй get_table_schema чтобы изучить структуру таблиц
+3. Только после этого формируй SQL запрос и используй execute_sql
+4. Не пытайся отвечать без использования инструментов
+`;
+
+  const systemPrompt = `${additionalInstructions}\n\n${serverPrompt}`;
+
   try {
-    // Create an agent that uses the MCP tools
     const myAgent = agent({
       name: "Assistant",
-      systemPrompt: "Используй инструменты для выполнения задачи.",
-      tools: await server.tools(),
-      llm: openai({ model: "gpt-4.1-nano" }),
+      systemPrompt,
+      tools,
+      llm: openai({ model: "gpt-4.1" }),
       verbose: true,
     });
 
-    // Run a task
-    const response = await myAgent.run("В какой город летали чаще всего?");
-    console.log(response.data.result);
+    const response = await myAgent.run(
+      "Какой самый популярный аэропорт в Москве?",
+    );
+
+    console.log("RAW RESPONSE:", response);
+    console.log("RESULT:", response.data.result);
+
+    // Парсим JSON если ответ в строковом формате
+    try {
+      const jsonResult =
+        typeof response.data.result === "string"
+          ? JSON.parse(response.data.result)
+          : response.data.result;
+      console.log("JSON RESULT:", jsonResult);
+    } catch (e) {
+      console.log("Result is not JSON, showing as text:", response.data.result);
+    }
   } finally {
     await server.cleanup();
   }
