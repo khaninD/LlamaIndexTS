@@ -110,6 +110,8 @@ class PgMcpServer {
           ],
         };
       }
+
+      throw new Error(`Unknown prompt: ${name}`);
     });
   }
 
