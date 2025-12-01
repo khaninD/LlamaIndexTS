@@ -18,7 +18,15 @@
       "module": "es2015"
     }
   },
-  "include": ["./mcp/new-server.ts", "./mcp/client.ts", "./mcp/pg-server.ts"],
+  "include": [
+    "./mcp/new-server.ts",
+    "./mcp/client.ts",
+    "./mcp/pg-server.ts",
+    "./mcp/pg-server-new.ts",
+    "./mcp/llama-client.ts",
+    "./mcp/llama-client-with-pg-mcp.ts",
+    "./mcp/llm-logger.ts"
+  ],
   "exclude": [
     "dist",
     "models/openai/live/browser/open-ai-realtime",

@@ -39,7 +39,7 @@ class PgMcpServer {
     });
     this.setupToolHandlers();
     this.setupPromptsHandlers();
-    this.setupResourcesHandlers();
+    //this.setupResourcesHandlers();
   }
 
   private async connectDatabase(): Promise<void> {
@@ -320,14 +320,22 @@ class PgMcpServer {
     try {
       const result = await this.client.query(query);
 
+      // Ограничиваем количество строк и колонок для экономии токенов
+      const maxRows = 100;
+      const maxColumns = 10;
+
       const structuredResult = {
         success: true,
-        data: result.rows,
+        data: result.rows.slice(0, maxRows),
         rowCount: result.rowCount,
-        columns: result.fields.map((field) => ({
+        columns: result.fields.slice(0, maxColumns).map((field) => ({
           name: field.name,
           dataType: field.dataTypeID,
         })),
+        truncated: {
+          rows: result.rowCount !== null && result.rowCount > maxRows,
+          columns: result.fields.length > maxColumns,
+        },
       };
 
       return {

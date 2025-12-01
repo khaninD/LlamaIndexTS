@@ -2,10 +2,11 @@ import { openai } from "@llamaindex/openai";
 import { mcp } from "@llamaindex/tools";
 import { agent } from "@llamaindex/workflow";
 import type { PromptMessage } from "@modelcontextprotocol/sdk/types.js";
+import { createLoggedLLM, LLMLogger } from "./llm-logger";
 
 const server = mcp({
   command: "node",
-  args: ["C:\\Users\\Daniil\\LlamaIndexTS\\examples\\dist\\server.bundle.js"],
+  args: ["D:\\LlamaIndexTS\\examples\\dist\\server.bundle.js"],
   verbose: true,
 });
 
@@ -43,18 +44,23 @@ async function main() {
 
   const systemPrompt = `${additionalInstructions}\n\n${serverPrompt}`;
 
+  // Создаем логгер для отслеживания токенов
+  const logger = new LLMLogger("./logs");
+
   try {
+    // Создаем LLM с логированием
+    const baseLLM = openai({ model: "gpt-4.1-nano" });
+    const loggedLLM = createLoggedLLM(baseLLM, logger);
+
     const myAgent = agent({
       name: "Assistant",
       systemPrompt,
       tools,
-      llm: openai({ model: "gpt-4.1" }),
+      llm: loggedLLM,
       verbose: true,
     });
 
-    const response = await myAgent.run(
-      "Какой самый популярный аэропорт в Москве?",
-    );
+    const response = await myAgent.run("Сколько рейсов всего было совершено?");
 
     console.log("RAW RESPONSE:", response);
     console.log("RESULT:", response.data.result);
