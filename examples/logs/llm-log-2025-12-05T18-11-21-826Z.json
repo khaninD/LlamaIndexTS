@@ -1,0 +1,312 @@
+[
+  {
+    "timestamp": "2025-12-05T18:11:21.839Z",
+    "type": "request",
+    "model": "gpt-4.1",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных PostgreSQL.\n  Используй  table_schema = 'bookings'\n  "
+      },
+      {
+        "content": "Изучи базу данных, выведи все таблицы",
+        "role": "user"
+      }
+    ],
+    "tools": [
+      {
+        "name": "connect_db",
+        "description": "Connect to a PostgreSQL database. Provide connection parameters.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "Database host (e.g., localhost)"
+            },
+            "port": {
+              "type": "number",
+              "description": "Database port (default: 5432)",
+              "default": 5432
+            },
+            "database": {
+              "type": "string",
+              "description": "Database name"
+            },
+            "user": {
+              "type": "string",
+              "description": "Database user"
+            },
+            "password": {
+              "type": "string",
+              "description": "Database password"
+            }
+          },
+          "required": ["host", "user", "password", "database"]
+        }
+      },
+      {
+        "name": "list_schemas",
+        "description": "List all schemas in the connected database",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "list_tables",
+        "description": "List all tables in a schema",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            }
+          }
+        }
+      },
+      {
+        "name": "describe_table",
+        "description": "Get detailed information about a table's structure (columns, types, constraints)",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            },
+            "table": {
+              "type": "string",
+              "description": "Table name"
+            }
+          },
+          "required": ["table"]
+        }
+      },
+      {
+        "name": "query",
+        "description": "Execute a SELECT or WITH (CTE) query on the database. Returns query results.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sql": {
+              "type": "string",
+              "description": "SQL SELECT or WITH query to execute (use $1, $2, etc. for parameters)"
+            },
+            "params": {
+              "type": "array",
+              "description": "Optional array of query parameters",
+              "items": {
+                "type": ["string", "number", "boolean", "null"]
+              }
+            }
+          },
+          "required": ["sql"]
+        }
+      }
+    ],
+    "tokensEstimate": {
+      "input": 598,
+      "output": 0,
+      "total": 598
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:11:23.735Z",
+    "type": "response",
+    "response": "",
+    "tokensEstimate": {
+      "input": 0,
+      "output": 0,
+      "total": 0
+    },
+    "raw": {
+      "id": "chatcmpl-CjUZ0OUD3dVfdI4hU8xl3c1mOdjuL",
+      "object": "chat.completion.chunk",
+      "created": 1764958282,
+      "model": "gpt-4.1-2025-04-14",
+      "service_tier": "default",
+      "system_fingerprint": "fp_433e8c8649",
+      "choices": [
+        {
+          "index": 0,
+          "delta": {},
+          "logprobs": null,
+          "finish_reason": "tool_calls"
+        }
+      ],
+      "obfuscation": ""
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:11:35.194Z",
+    "type": "request",
+    "model": "gpt-4.1",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных PostgreSQL.\n  Используй  table_schema = 'bookings'\n  "
+      },
+      {
+        "content": "Изучи базу данных, выведи все таблицы",
+        "role": "user"
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "list_tables",
+              "input": {
+                "schema": "bookings"
+              },
+              "id": "call_TPh2BQmWHBQ2Bnc5oxTWwbqG"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Error: getaddrinfo ENOTFOUND postgresql\n    }\n  ],\n  isError: true\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_TPh2BQmWHBQ2Bnc5oxTWwbqG",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Error: getaddrinfo ENOTFOUND postgresql\n    }\n  ],\n  isError: true\n}",
+            "isError": false
+          }
+        }
+      }
+    ],
+    "tools": [
+      {
+        "name": "connect_db",
+        "description": "Connect to a PostgreSQL database. Provide connection parameters.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "Database host (e.g., localhost)"
+            },
+            "port": {
+              "type": "number",
+              "description": "Database port (default: 5432)",
+              "default": 5432
+            },
+            "database": {
+              "type": "string",
+              "description": "Database name"
+            },
+            "user": {
+              "type": "string",
+              "description": "Database user"
+            },
+            "password": {
+              "type": "string",
+              "description": "Database password"
+            }
+          },
+          "required": ["host", "user", "password", "database"]
+        }
+      },
+      {
+        "name": "list_schemas",
+        "description": "List all schemas in the connected database",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "list_tables",
+        "description": "List all tables in a schema",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            }
+          }
+        }
+      },
+      {
+        "name": "describe_table",
+        "description": "Get detailed information about a table's structure (columns, types, constraints)",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            },
+            "table": {
+              "type": "string",
+              "description": "Table name"
+            }
+          },
+          "required": ["table"]
+        }
+      },
+      {
+        "name": "query",
+        "description": "Execute a SELECT or WITH (CTE) query on the database. Returns query results.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sql": {
+              "type": "string",
+              "description": "SQL SELECT or WITH query to execute (use $1, $2, etc. for parameters)"
+            },
+            "params": {
+              "type": "array",
+              "description": "Optional array of query parameters",
+              "items": {
+                "type": ["string", "number", "boolean", "null"]
+              }
+            }
+          },
+          "required": ["sql"]
+        }
+      }
+    ],
+    "tokensEstimate": {
+      "input": 638,
+      "output": 0,
+      "total": 638
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:11:37.104Z",
+    "type": "response",
+    "response": "Произошла ошибка при попытке получить список таблиц в схеме bookings. Похоже, что соединение с базой данных не установлено или параметры подключения отсутствуют.\n\nПожалуйста, предоставьте параметры для подключения к базе данных (хост, порт, имя базы данных, пользователь, пароль), чтобы я мог продолжить работу.",
+    "tokensEstimate": {
+      "input": 0,
+      "output": 104,
+      "total": 104
+    },
+    "raw": {
+      "id": "chatcmpl-CjUZDS1IpMfPnEfCRovhLkeLaoKJj",
+      "object": "chat.completion.chunk",
+      "created": 1764958295,
+      "model": "gpt-4.1-2025-04-14",
+      "service_tier": "default",
+      "system_fingerprint": "fp_433e8c8649",
+      "choices": [
+        {
+          "index": 0,
+          "delta": {},
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "obfuscation": "2yElik"
+    }
+  }
+]

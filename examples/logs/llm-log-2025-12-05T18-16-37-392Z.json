@@ -1,0 +1,1537 @@
+[
+  {
+    "timestamp": "2025-12-05T18:16:37.406Z",
+    "type": "request",
+    "model": "gpt-4.1-nano",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных PostgreSQL.\n  Используй  table_schema = 'bookings'\n  "
+      },
+      {
+        "content": "Какой самый дорогой билет, выведи полную информацию о нем.",
+        "role": "user"
+      }
+    ],
+    "tools": [
+      {
+        "name": "connect_db",
+        "description": "Connect to a PostgreSQL database. Provide connection parameters.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "Database host (e.g., localhost)"
+            },
+            "port": {
+              "type": "number",
+              "description": "Database port (default: 5432)",
+              "default": 5432
+            },
+            "database": {
+              "type": "string",
+              "description": "Database name"
+            },
+            "user": {
+              "type": "string",
+              "description": "Database user"
+            },
+            "password": {
+              "type": "string",
+              "description": "Database password"
+            }
+          },
+          "required": ["host", "user", "password", "database"]
+        }
+      },
+      {
+        "name": "list_schemas",
+        "description": "List all schemas in the connected database",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "list_tables",
+        "description": "List all tables in a schema",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            }
+          }
+        }
+      },
+      {
+        "name": "describe_table",
+        "description": "Get detailed information about a table's structure (columns, types, constraints)",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            },
+            "table": {
+              "type": "string",
+              "description": "Table name"
+            }
+          },
+          "required": ["table"]
+        }
+      },
+      {
+        "name": "query",
+        "description": "Execute a SELECT or WITH (CTE) query on the database. Returns query results.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sql": {
+              "type": "string",
+              "description": "SQL SELECT or WITH query to execute (use $1, $2, etc. for parameters)"
+            },
+            "params": {
+              "type": "array",
+              "description": "Optional array of query parameters",
+              "items": {
+                "type": ["string", "number", "boolean", "null"]
+              }
+            }
+          },
+          "required": ["sql"]
+        }
+      }
+    ],
+    "tokensEstimate": {
+      "input": 605,
+      "output": 0,
+      "total": 605
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:16:38.202Z",
+    "type": "response",
+    "response": "",
+    "tokensEstimate": {
+      "input": 0,
+      "output": 0,
+      "total": 0
+    },
+    "raw": {
+      "id": "chatcmpl-CjUe5SQuRkuoclZi8oTBzUw98WfeC",
+      "object": "chat.completion.chunk",
+      "created": 1764958597,
+      "model": "gpt-4.1-nano-2025-04-14",
+      "service_tier": "default",
+      "system_fingerprint": "fp_1a97b5aa6c",
+      "choices": [
+        {
+          "index": 0,
+          "delta": {},
+          "logprobs": null,
+          "finish_reason": "tool_calls"
+        }
+      ],
+      "obfuscation": "uTFnUmedFln"
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:16:38.210Z",
+    "type": "request",
+    "model": "gpt-4.1-nano",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных PostgreSQL.\n  Используй  table_schema = 'bookings'\n  "
+      },
+      {
+        "content": "Какой самый дорогой билет, выведи полную информацию о нем.",
+        "role": "user"
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "list_schemas",
+              "input": {},
+              "id": "call_mM8PxNVve1DjRxumcYjbYRzh"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Found 3 schema(s):\\n\\nbookings\\npg_toast\\npublic\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_mM8PxNVve1DjRxumcYjbYRzh",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Found 3 schema(s):\\n\\nbookings\\npg_toast\\npublic\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      }
+    ],
+    "tools": [
+      {
+        "name": "connect_db",
+        "description": "Connect to a PostgreSQL database. Provide connection parameters.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "Database host (e.g., localhost)"
+            },
+            "port": {
+              "type": "number",
+              "description": "Database port (default: 5432)",
+              "default": 5432
+            },
+            "database": {
+              "type": "string",
+              "description": "Database name"
+            },
+            "user": {
+              "type": "string",
+              "description": "Database user"
+            },
+            "password": {
+              "type": "string",
+              "description": "Database password"
+            }
+          },
+          "required": ["host", "user", "password", "database"]
+        }
+      },
+      {
+        "name": "list_schemas",
+        "description": "List all schemas in the connected database",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "list_tables",
+        "description": "List all tables in a schema",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            }
+          }
+        }
+      },
+      {
+        "name": "describe_table",
+        "description": "Get detailed information about a table's structure (columns, types, constraints)",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            },
+            "table": {
+              "type": "string",
+              "description": "Table name"
+            }
+          },
+          "required": ["table"]
+        }
+      },
+      {
+        "name": "query",
+        "description": "Execute a SELECT or WITH (CTE) query on the database. Returns query results.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sql": {
+              "type": "string",
+              "description": "SQL SELECT or WITH query to execute (use $1, $2, etc. for parameters)"
+            },
+            "params": {
+              "type": "array",
+              "description": "Optional array of query parameters",
+              "items": {
+                "type": ["string", "number", "boolean", "null"]
+              }
+            }
+          },
+          "required": ["sql"]
+        }
+      }
+    ],
+    "tokensEstimate": {
+      "input": 642,
+      "output": 0,
+      "total": 642
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:16:38.935Z",
+    "type": "response",
+    "response": "",
+    "tokensEstimate": {
+      "input": 0,
+      "output": 0,
+      "total": 0
+    },
+    "raw": {
+      "id": "chatcmpl-CjUe6pO4FH7EPuEX9ocjfLnUyrN8z",
+      "object": "chat.completion.chunk",
+      "created": 1764958598,
+      "model": "gpt-4.1-nano-2025-04-14",
+      "service_tier": "default",
+      "system_fingerprint": "fp_1a97b5aa6c",
+      "choices": [
+        {
+          "index": 0,
+          "delta": {},
+          "logprobs": null,
+          "finish_reason": "tool_calls"
+        }
+      ],
+      "obfuscation": "8RANcioSH5X"
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:16:38.942Z",
+    "type": "request",
+    "model": "gpt-4.1-nano",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных PostgreSQL.\n  Используй  table_schema = 'bookings'\n  "
+      },
+      {
+        "content": "Какой самый дорогой билет, выведи полную информацию о нем.",
+        "role": "user"
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "list_schemas",
+              "input": {},
+              "id": "call_mM8PxNVve1DjRxumcYjbYRzh"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Found 3 schema(s):\\n\\nbookings\\npg_toast\\npublic\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_mM8PxNVve1DjRxumcYjbYRzh",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Found 3 schema(s):\\n\\nbookings\\npg_toast\\npublic\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "list_tables",
+              "input": {
+                "schema": "bookings"
+              },
+              "id": "call_tz2DVo1lFpr6gsObKhr1148o"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Found 12 table(s) in schema 'bookings':\\n\\nairplanes (VIEW)\\nairplanes_data (BASE TABLE)\\nairports (VIEW)\\nairports_data (BASE TABLE)\\nboarding_passes (BASE TABLE)\\nbookings (BASE TABLE)\\nflights (BASE TABLE)\\nroutes (BASE TABLE)\\nseats (BASE TABLE)\\nsegments (BASE TABLE)\\ntickets (BASE TABLE)\\ntimetable (VIEW)\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_tz2DVo1lFpr6gsObKhr1148o",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Found 12 table(s) in schema 'bookings':\\n\\nairplanes (VIEW)\\nairplanes_data (BASE TABLE)\\nairports (VIEW)\\nairports_data (BASE TABLE)\\nboarding_passes (BASE TABLE)\\nbookings (BASE TABLE)\\nflights (BASE TABLE)\\nroutes (BASE TABLE)\\nseats (BASE TABLE)\\nsegments (BASE TABLE)\\ntickets (BASE TABLE)\\ntimetable (VIEW)\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      }
+    ],
+    "tools": [
+      {
+        "name": "connect_db",
+        "description": "Connect to a PostgreSQL database. Provide connection parameters.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "Database host (e.g., localhost)"
+            },
+            "port": {
+              "type": "number",
+              "description": "Database port (default: 5432)",
+              "default": 5432
+            },
+            "database": {
+              "type": "string",
+              "description": "Database name"
+            },
+            "user": {
+              "type": "string",
+              "description": "Database user"
+            },
+            "password": {
+              "type": "string",
+              "description": "Database password"
+            }
+          },
+          "required": ["host", "user", "password", "database"]
+        }
+      },
+      {
+        "name": "list_schemas",
+        "description": "List all schemas in the connected database",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "list_tables",
+        "description": "List all tables in a schema",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            }
+          }
+        }
+      },
+      {
+        "name": "describe_table",
+        "description": "Get detailed information about a table's structure (columns, types, constraints)",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            },
+            "table": {
+              "type": "string",
+              "description": "Table name"
+            }
+          },
+          "required": ["table"]
+        }
+      },
+      {
+        "name": "query",
+        "description": "Execute a SELECT or WITH (CTE) query on the database. Returns query results.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sql": {
+              "type": "string",
+              "description": "SQL SELECT or WITH query to execute (use $1, $2, etc. for parameters)"
+            },
+            "params": {
+              "type": "array",
+              "description": "Optional array of query parameters",
+              "items": {
+                "type": ["string", "number", "boolean", "null"]
+              }
+            }
+          },
+          "required": ["sql"]
+        }
+      }
+    ],
+    "tokensEstimate": {
+      "input": 767,
+      "output": 0,
+      "total": 767
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:16:39.579Z",
+    "type": "response",
+    "response": "",
+    "tokensEstimate": {
+      "input": 0,
+      "output": 0,
+      "total": 0
+    },
+    "raw": {
+      "id": "chatcmpl-CjUe7ZqEwgKeMy5N9lCA8zzuFRiB1",
+      "object": "chat.completion.chunk",
+      "created": 1764958599,
+      "model": "gpt-4.1-nano-2025-04-14",
+      "service_tier": "default",
+      "system_fingerprint": "fp_1a97b5aa6c",
+      "choices": [
+        {
+          "index": 0,
+          "delta": {},
+          "logprobs": null,
+          "finish_reason": "tool_calls"
+        }
+      ],
+      "obfuscation": "qUDCd527Z9E"
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:16:39.610Z",
+    "type": "request",
+    "model": "gpt-4.1-nano",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных PostgreSQL.\n  Используй  table_schema = 'bookings'\n  "
+      },
+      {
+        "content": "Какой самый дорогой билет, выведи полную информацию о нем.",
+        "role": "user"
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "list_schemas",
+              "input": {},
+              "id": "call_mM8PxNVve1DjRxumcYjbYRzh"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Found 3 schema(s):\\n\\nbookings\\npg_toast\\npublic\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_mM8PxNVve1DjRxumcYjbYRzh",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Found 3 schema(s):\\n\\nbookings\\npg_toast\\npublic\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "list_tables",
+              "input": {
+                "schema": "bookings"
+              },
+              "id": "call_tz2DVo1lFpr6gsObKhr1148o"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Found 12 table(s) in schema 'bookings':\\n\\nairplanes (VIEW)\\nairplanes_data (BASE TABLE)\\nairports (VIEW)\\nairports_data (BASE TABLE)\\nboarding_passes (BASE TABLE)\\nbookings (BASE TABLE)\\nflights (BASE TABLE)\\nroutes (BASE TABLE)\\nseats (BASE TABLE)\\nsegments (BASE TABLE)\\ntickets (BASE TABLE)\\ntimetable (VIEW)\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_tz2DVo1lFpr6gsObKhr1148o",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Found 12 table(s) in schema 'bookings':\\n\\nairplanes (VIEW)\\nairplanes_data (BASE TABLE)\\nairports (VIEW)\\nairports_data (BASE TABLE)\\nboarding_passes (BASE TABLE)\\nbookings (BASE TABLE)\\nflights (BASE TABLE)\\nroutes (BASE TABLE)\\nseats (BASE TABLE)\\nsegments (BASE TABLE)\\ntickets (BASE TABLE)\\ntimetable (VIEW)\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "describe_table",
+              "input": {
+                "schema": "bookings",
+                "table": "tickets"
+              },
+              "id": "call_x4AHbXPtuGrXLODJhnSe1bHT"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.tickets\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nticket_no                      text\\tNOT NULL\\tPRIMARY KEY\\nbook_ref                       character(6)\\tNOT NULL\\tFK -> bookings.bookings(book_ref)\\npassenger_id                   text\\tNOT NULL\\npassenger_name                 text\\tNOT NULL\\noutbound                       boolean\\tNOT NULL\\n\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_x4AHbXPtuGrXLODJhnSe1bHT",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.tickets\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nticket_no                      text\\tNOT NULL\\tPRIMARY KEY\\nbook_ref                       character(6)\\tNOT NULL\\tFK -> bookings.bookings(book_ref)\\npassenger_id                   text\\tNOT NULL\\npassenger_name                 text\\tNOT NULL\\noutbound                       boolean\\tNOT NULL\\n\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      }
+    ],
+    "tools": [
+      {
+        "name": "connect_db",
+        "description": "Connect to a PostgreSQL database. Provide connection parameters.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "Database host (e.g., localhost)"
+            },
+            "port": {
+              "type": "number",
+              "description": "Database port (default: 5432)",
+              "default": 5432
+            },
+            "database": {
+              "type": "string",
+              "description": "Database name"
+            },
+            "user": {
+              "type": "string",
+              "description": "Database user"
+            },
+            "password": {
+              "type": "string",
+              "description": "Database password"
+            }
+          },
+          "required": ["host", "user", "password", "database"]
+        }
+      },
+      {
+        "name": "list_schemas",
+        "description": "List all schemas in the connected database",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "list_tables",
+        "description": "List all tables in a schema",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            }
+          }
+        }
+      },
+      {
+        "name": "describe_table",
+        "description": "Get detailed information about a table's structure (columns, types, constraints)",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            },
+            "table": {
+              "type": "string",
+              "description": "Table name"
+            }
+          },
+          "required": ["table"]
+        }
+      },
+      {
+        "name": "query",
+        "description": "Execute a SELECT or WITH (CTE) query on the database. Returns query results.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sql": {
+              "type": "string",
+              "description": "SQL SELECT or WITH query to execute (use $1, $2, etc. for parameters)"
+            },
+            "params": {
+              "type": "array",
+              "description": "Optional array of query parameters",
+              "items": {
+                "type": ["string", "number", "boolean", "null"]
+              }
+            }
+          },
+          "required": ["sql"]
+        }
+      }
+    ],
+    "tokensEstimate": {
+      "input": 926,
+      "output": 0,
+      "total": 926
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:16:40.274Z",
+    "type": "response",
+    "response": "",
+    "tokensEstimate": {
+      "input": 0,
+      "output": 0,
+      "total": 0
+    },
+    "raw": {
+      "id": "chatcmpl-CjUe7Rc5wdvtwm2uVUZM5QkO951zR",
+      "object": "chat.completion.chunk",
+      "created": 1764958599,
+      "model": "gpt-4.1-nano-2025-04-14",
+      "service_tier": "default",
+      "system_fingerprint": "fp_1a97b5aa6c",
+      "choices": [
+        {
+          "index": 0,
+          "delta": {},
+          "logprobs": null,
+          "finish_reason": "tool_calls"
+        }
+      ],
+      "obfuscation": "F1iY0whQ21o"
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:16:40.293Z",
+    "type": "request",
+    "model": "gpt-4.1-nano",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных PostgreSQL.\n  Используй  table_schema = 'bookings'\n  "
+      },
+      {
+        "content": "Какой самый дорогой билет, выведи полную информацию о нем.",
+        "role": "user"
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "list_schemas",
+              "input": {},
+              "id": "call_mM8PxNVve1DjRxumcYjbYRzh"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Found 3 schema(s):\\n\\nbookings\\npg_toast\\npublic\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_mM8PxNVve1DjRxumcYjbYRzh",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Found 3 schema(s):\\n\\nbookings\\npg_toast\\npublic\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "list_tables",
+              "input": {
+                "schema": "bookings"
+              },
+              "id": "call_tz2DVo1lFpr6gsObKhr1148o"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Found 12 table(s) in schema 'bookings':\\n\\nairplanes (VIEW)\\nairplanes_data (BASE TABLE)\\nairports (VIEW)\\nairports_data (BASE TABLE)\\nboarding_passes (BASE TABLE)\\nbookings (BASE TABLE)\\nflights (BASE TABLE)\\nroutes (BASE TABLE)\\nseats (BASE TABLE)\\nsegments (BASE TABLE)\\ntickets (BASE TABLE)\\ntimetable (VIEW)\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_tz2DVo1lFpr6gsObKhr1148o",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Found 12 table(s) in schema 'bookings':\\n\\nairplanes (VIEW)\\nairplanes_data (BASE TABLE)\\nairports (VIEW)\\nairports_data (BASE TABLE)\\nboarding_passes (BASE TABLE)\\nbookings (BASE TABLE)\\nflights (BASE TABLE)\\nroutes (BASE TABLE)\\nseats (BASE TABLE)\\nsegments (BASE TABLE)\\ntickets (BASE TABLE)\\ntimetable (VIEW)\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "describe_table",
+              "input": {
+                "schema": "bookings",
+                "table": "tickets"
+              },
+              "id": "call_x4AHbXPtuGrXLODJhnSe1bHT"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.tickets\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nticket_no                      text\\tNOT NULL\\tPRIMARY KEY\\nbook_ref                       character(6)\\tNOT NULL\\tFK -> bookings.bookings(book_ref)\\npassenger_id                   text\\tNOT NULL\\npassenger_name                 text\\tNOT NULL\\noutbound                       boolean\\tNOT NULL\\n\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_x4AHbXPtuGrXLODJhnSe1bHT",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.tickets\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nticket_no                      text\\tNOT NULL\\tPRIMARY KEY\\nbook_ref                       character(6)\\tNOT NULL\\tFK -> bookings.bookings(book_ref)\\npassenger_id                   text\\tNOT NULL\\npassenger_name                 text\\tNOT NULL\\noutbound                       boolean\\tNOT NULL\\n\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "describe_table",
+              "input": {
+                "schema": "bookings",
+                "table": "bookings"
+              },
+              "id": "call_z7Ub4Bc0WeW6ue6A1ylj3fBV"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.bookings\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nbook_ref                       character(6)\\tNOT NULL\\tPRIMARY KEY\\nbook_date                      timestamp with time zone\\tNOT NULL\\ntotal_amount                   numeric\\tNOT NULL\\n\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_z7Ub4Bc0WeW6ue6A1ylj3fBV",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.bookings\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nbook_ref                       character(6)\\tNOT NULL\\tPRIMARY KEY\\nbook_date                      timestamp with time zone\\tNOT NULL\\ntotal_amount                   numeric\\tNOT NULL\\n\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      }
+    ],
+    "tools": [
+      {
+        "name": "connect_db",
+        "description": "Connect to a PostgreSQL database. Provide connection parameters.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "Database host (e.g., localhost)"
+            },
+            "port": {
+              "type": "number",
+              "description": "Database port (default: 5432)",
+              "default": 5432
+            },
+            "database": {
+              "type": "string",
+              "description": "Database name"
+            },
+            "user": {
+              "type": "string",
+              "description": "Database user"
+            },
+            "password": {
+              "type": "string",
+              "description": "Database password"
+            }
+          },
+          "required": ["host", "user", "password", "database"]
+        }
+      },
+      {
+        "name": "list_schemas",
+        "description": "List all schemas in the connected database",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "list_tables",
+        "description": "List all tables in a schema",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            }
+          }
+        }
+      },
+      {
+        "name": "describe_table",
+        "description": "Get detailed information about a table's structure (columns, types, constraints)",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            },
+            "table": {
+              "type": "string",
+              "description": "Table name"
+            }
+          },
+          "required": ["table"]
+        }
+      },
+      {
+        "name": "query",
+        "description": "Execute a SELECT or WITH (CTE) query on the database. Returns query results.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sql": {
+              "type": "string",
+              "description": "SQL SELECT or WITH query to execute (use $1, $2, etc. for parameters)"
+            },
+            "params": {
+              "type": "array",
+              "description": "Optional array of query parameters",
+              "items": {
+                "type": ["string", "number", "boolean", "null"]
+              }
+            }
+          },
+          "required": ["sql"]
+        }
+      }
+    ],
+    "tokensEstimate": {
+      "input": 1049,
+      "output": 0,
+      "total": 1049
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:16:41.258Z",
+    "type": "response",
+    "response": "",
+    "tokensEstimate": {
+      "input": 0,
+      "output": 0,
+      "total": 0
+    },
+    "raw": {
+      "id": "chatcmpl-CjUe8M4MUEjHDqJ9RESslX0yqppOa",
+      "object": "chat.completion.chunk",
+      "created": 1764958600,
+      "model": "gpt-4.1-nano-2025-04-14",
+      "service_tier": "default",
+      "system_fingerprint": "fp_1a97b5aa6c",
+      "choices": [
+        {
+          "index": 0,
+          "delta": {},
+          "logprobs": null,
+          "finish_reason": "tool_calls"
+        }
+      ],
+      "obfuscation": "cIHQg83uaUX"
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:16:41.265Z",
+    "type": "request",
+    "model": "gpt-4.1-nano",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных PostgreSQL.\n  Используй  table_schema = 'bookings'\n  "
+      },
+      {
+        "content": "Какой самый дорогой билет, выведи полную информацию о нем.",
+        "role": "user"
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "list_schemas",
+              "input": {},
+              "id": "call_mM8PxNVve1DjRxumcYjbYRzh"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Found 3 schema(s):\\n\\nbookings\\npg_toast\\npublic\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_mM8PxNVve1DjRxumcYjbYRzh",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Found 3 schema(s):\\n\\nbookings\\npg_toast\\npublic\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "list_tables",
+              "input": {
+                "schema": "bookings"
+              },
+              "id": "call_tz2DVo1lFpr6gsObKhr1148o"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Found 12 table(s) in schema 'bookings':\\n\\nairplanes (VIEW)\\nairplanes_data (BASE TABLE)\\nairports (VIEW)\\nairports_data (BASE TABLE)\\nboarding_passes (BASE TABLE)\\nbookings (BASE TABLE)\\nflights (BASE TABLE)\\nroutes (BASE TABLE)\\nseats (BASE TABLE)\\nsegments (BASE TABLE)\\ntickets (BASE TABLE)\\ntimetable (VIEW)\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_tz2DVo1lFpr6gsObKhr1148o",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Found 12 table(s) in schema 'bookings':\\n\\nairplanes (VIEW)\\nairplanes_data (BASE TABLE)\\nairports (VIEW)\\nairports_data (BASE TABLE)\\nboarding_passes (BASE TABLE)\\nbookings (BASE TABLE)\\nflights (BASE TABLE)\\nroutes (BASE TABLE)\\nseats (BASE TABLE)\\nsegments (BASE TABLE)\\ntickets (BASE TABLE)\\ntimetable (VIEW)\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "describe_table",
+              "input": {
+                "schema": "bookings",
+                "table": "tickets"
+              },
+              "id": "call_x4AHbXPtuGrXLODJhnSe1bHT"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.tickets\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nticket_no                      text\\tNOT NULL\\tPRIMARY KEY\\nbook_ref                       character(6)\\tNOT NULL\\tFK -> bookings.bookings(book_ref)\\npassenger_id                   text\\tNOT NULL\\npassenger_name                 text\\tNOT NULL\\noutbound                       boolean\\tNOT NULL\\n\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_x4AHbXPtuGrXLODJhnSe1bHT",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.tickets\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nticket_no                      text\\tNOT NULL\\tPRIMARY KEY\\nbook_ref                       character(6)\\tNOT NULL\\tFK -> bookings.bookings(book_ref)\\npassenger_id                   text\\tNOT NULL\\npassenger_name                 text\\tNOT NULL\\noutbound                       boolean\\tNOT NULL\\n\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "describe_table",
+              "input": {
+                "schema": "bookings",
+                "table": "bookings"
+              },
+              "id": "call_z7Ub4Bc0WeW6ue6A1ylj3fBV"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.bookings\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nbook_ref                       character(6)\\tNOT NULL\\tPRIMARY KEY\\nbook_date                      timestamp with time zone\\tNOT NULL\\ntotal_amount                   numeric\\tNOT NULL\\n\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_z7Ub4Bc0WeW6ue6A1ylj3fBV",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.bookings\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nbook_ref                       character(6)\\tNOT NULL\\tPRIMARY KEY\\nbook_date                      timestamp with time zone\\tNOT NULL\\ntotal_amount                   numeric\\tNOT NULL\\n\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "query",
+              "input": {
+                "sql": "SELECT * FROM bookings.tickets ORDER BY total_amount DESC LIMIT 1;"
+              },
+              "id": "call_tjIEfG98NCBz5ZuHCRSke8xJ"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Error: столбец \\total_amount\\ не существует\n    }\n  ],\n  isError: true\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_tjIEfG98NCBz5ZuHCRSke8xJ",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Error: столбец \\total_amount\\ не существует\n    }\n  ],\n  isError: true\n}",
+            "isError": false
+          }
+        }
+      }
+    ],
+    "tools": [
+      {
+        "name": "connect_db",
+        "description": "Connect to a PostgreSQL database. Provide connection parameters.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "Database host (e.g., localhost)"
+            },
+            "port": {
+              "type": "number",
+              "description": "Database port (default: 5432)",
+              "default": 5432
+            },
+            "database": {
+              "type": "string",
+              "description": "Database name"
+            },
+            "user": {
+              "type": "string",
+              "description": "Database user"
+            },
+            "password": {
+              "type": "string",
+              "description": "Database password"
+            }
+          },
+          "required": ["host", "user", "password", "database"]
+        }
+      },
+      {
+        "name": "list_schemas",
+        "description": "List all schemas in the connected database",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "list_tables",
+        "description": "List all tables in a schema",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            }
+          }
+        }
+      },
+      {
+        "name": "describe_table",
+        "description": "Get detailed information about a table's structure (columns, types, constraints)",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            },
+            "table": {
+              "type": "string",
+              "description": "Table name"
+            }
+          },
+          "required": ["table"]
+        }
+      },
+      {
+        "name": "query",
+        "description": "Execute a SELECT or WITH (CTE) query on the database. Returns query results.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sql": {
+              "type": "string",
+              "description": "SQL SELECT or WITH query to execute (use $1, $2, etc. for parameters)"
+            },
+            "params": {
+              "type": "array",
+              "description": "Optional array of query parameters",
+              "items": {
+                "type": ["string", "number", "boolean", "null"]
+              }
+            }
+          },
+          "required": ["sql"]
+        }
+      }
+    ],
+    "tokensEstimate": {
+      "input": 1090,
+      "output": 0,
+      "total": 1090
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:16:43.007Z",
+    "type": "response",
+    "response": "",
+    "tokensEstimate": {
+      "input": 0,
+      "output": 0,
+      "total": 0
+    },
+    "raw": {
+      "id": "chatcmpl-CjUe9zrsAIONiYZ7zbbogaTcwcDVC",
+      "object": "chat.completion.chunk",
+      "created": 1764958601,
+      "model": "gpt-4.1-nano-2025-04-14",
+      "service_tier": "default",
+      "system_fingerprint": "fp_1a97b5aa6c",
+      "choices": [
+        {
+          "index": 0,
+          "delta": {},
+          "logprobs": null,
+          "finish_reason": "tool_calls"
+        }
+      ],
+      "obfuscation": "dEKiqP6s1D3"
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:17:02.222Z",
+    "type": "request",
+    "model": "gpt-4.1-nano",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных PostgreSQL.\n  Используй  table_schema = 'bookings'\n  "
+      },
+      {
+        "content": "Какой самый дорогой билет, выведи полную информацию о нем.",
+        "role": "user"
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "list_schemas",
+              "input": {},
+              "id": "call_mM8PxNVve1DjRxumcYjbYRzh"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Found 3 schema(s):\\n\\nbookings\\npg_toast\\npublic\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_mM8PxNVve1DjRxumcYjbYRzh",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Found 3 schema(s):\\n\\nbookings\\npg_toast\\npublic\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "list_tables",
+              "input": {
+                "schema": "bookings"
+              },
+              "id": "call_tz2DVo1lFpr6gsObKhr1148o"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Found 12 table(s) in schema 'bookings':\\n\\nairplanes (VIEW)\\nairplanes_data (BASE TABLE)\\nairports (VIEW)\\nairports_data (BASE TABLE)\\nboarding_passes (BASE TABLE)\\nbookings (BASE TABLE)\\nflights (BASE TABLE)\\nroutes (BASE TABLE)\\nseats (BASE TABLE)\\nsegments (BASE TABLE)\\ntickets (BASE TABLE)\\ntimetable (VIEW)\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_tz2DVo1lFpr6gsObKhr1148o",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Found 12 table(s) in schema 'bookings':\\n\\nairplanes (VIEW)\\nairplanes_data (BASE TABLE)\\nairports (VIEW)\\nairports_data (BASE TABLE)\\nboarding_passes (BASE TABLE)\\nbookings (BASE TABLE)\\nflights (BASE TABLE)\\nroutes (BASE TABLE)\\nseats (BASE TABLE)\\nsegments (BASE TABLE)\\ntickets (BASE TABLE)\\ntimetable (VIEW)\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "describe_table",
+              "input": {
+                "schema": "bookings",
+                "table": "tickets"
+              },
+              "id": "call_x4AHbXPtuGrXLODJhnSe1bHT"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.tickets\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nticket_no                      text\\tNOT NULL\\tPRIMARY KEY\\nbook_ref                       character(6)\\tNOT NULL\\tFK -> bookings.bookings(book_ref)\\npassenger_id                   text\\tNOT NULL\\npassenger_name                 text\\tNOT NULL\\noutbound                       boolean\\tNOT NULL\\n\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_x4AHbXPtuGrXLODJhnSe1bHT",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.tickets\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nticket_no                      text\\tNOT NULL\\tPRIMARY KEY\\nbook_ref                       character(6)\\tNOT NULL\\tFK -> bookings.bookings(book_ref)\\npassenger_id                   text\\tNOT NULL\\npassenger_name                 text\\tNOT NULL\\noutbound                       boolean\\tNOT NULL\\n\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "describe_table",
+              "input": {
+                "schema": "bookings",
+                "table": "bookings"
+              },
+              "id": "call_z7Ub4Bc0WeW6ue6A1ylj3fBV"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.bookings\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nbook_ref                       character(6)\\tNOT NULL\\tPRIMARY KEY\\nbook_date                      timestamp with time zone\\tNOT NULL\\ntotal_amount                   numeric\\tNOT NULL\\n\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_z7Ub4Bc0WeW6ue6A1ylj3fBV",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Table: bookings.bookings\\n\\nColumns:\\n--------------------------------------------------------------------------------\\nbook_ref                       character(6)\\tNOT NULL\\tPRIMARY KEY\\nbook_date                      timestamp with time zone\\tNOT NULL\\ntotal_amount                   numeric\\tNOT NULL\\n\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "query",
+              "input": {
+                "sql": "SELECT * FROM bookings.tickets ORDER BY total_amount DESC LIMIT 1;"
+              },
+              "id": "call_tjIEfG98NCBz5ZuHCRSke8xJ"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Error: столбец \\total_amount\\ не существует\n    }\n  ],\n  isError: true\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_tjIEfG98NCBz5ZuHCRSke8xJ",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Error: столбец \\total_amount\\ не существует\n    }\n  ],\n  isError: true\n}",
+            "isError": false
+          }
+        }
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "query",
+              "input": {
+                "sql": "SELECT * FROM bookings.tickets ORDER BY (SELECT total_amount FROM bookings.bookings WHERE bookings.bookings.book_ref = bookings.tickets.book_ref) DESC LIMIT 1;"
+              },
+              "id": "call_vPu8MlRf7le5CY2ktCDmcF5X"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: Query returned 1 row(s)\\n\\nticket_no | book_ref | passenger_id | passenger_name | outbound\\n---------------------+----------------------+----------------------+----------------------+---------------------\\n0005432690085        | 7UU4BE               | US 3893206158236     | Barbara Ramirez      | true                \\n\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_vPu8MlRf7le5CY2ktCDmcF5X",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: Query returned 1 row(s)\\n\\nticket_no | book_ref | passenger_id | passenger_name | outbound\\n---------------------+----------------------+----------------------+----------------------+---------------------\\n0005432690085        | 7UU4BE               | US 3893206158236     | Barbara Ramirez      | true                \\n\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      }
+    ],
+    "tools": [
+      {
+        "name": "connect_db",
+        "description": "Connect to a PostgreSQL database. Provide connection parameters.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "host": {
+              "type": "string",
+              "description": "Database host (e.g., localhost)"
+            },
+            "port": {
+              "type": "number",
+              "description": "Database port (default: 5432)",
+              "default": 5432
+            },
+            "database": {
+              "type": "string",
+              "description": "Database name"
+            },
+            "user": {
+              "type": "string",
+              "description": "Database user"
+            },
+            "password": {
+              "type": "string",
+              "description": "Database password"
+            }
+          },
+          "required": ["host", "user", "password", "database"]
+        }
+      },
+      {
+        "name": "list_schemas",
+        "description": "List all schemas in the connected database",
+        "parameters": {
+          "type": "object",
+          "properties": {}
+        }
+      },
+      {
+        "name": "list_tables",
+        "description": "List all tables in a schema",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            }
+          }
+        }
+      },
+      {
+        "name": "describe_table",
+        "description": "Get detailed information about a table's structure (columns, types, constraints)",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "schema": {
+              "type": "string",
+              "description": "Schema name (default: public)",
+              "default": "public"
+            },
+            "table": {
+              "type": "string",
+              "description": "Table name"
+            }
+          },
+          "required": ["table"]
+        }
+      },
+      {
+        "name": "query",
+        "description": "Execute a SELECT or WITH (CTE) query on the database. Returns query results.",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "sql": {
+              "type": "string",
+              "description": "SQL SELECT or WITH query to execute (use $1, $2, etc. for parameters)"
+            },
+            "params": {
+              "type": "array",
+              "description": "Optional array of query parameters",
+              "items": {
+                "type": ["string", "number", "boolean", "null"]
+              }
+            }
+          },
+          "required": ["sql"]
+        }
+      }
+    ],
+    "tokensEstimate": {
+      "input": 1218,
+      "output": 0,
+      "total": 1218
+    }
+  },
+  {
+    "timestamp": "2025-12-05T18:17:03.116Z",
+    "type": "response",
+    "response": "Самый дорогой билет имеет номер: 0005432690085.",
+    "tokensEstimate": {
+      "input": 0,
+      "output": 16,
+      "total": 16
+    },
+    "raw": {
+      "id": "chatcmpl-CjUeUXy6jPUDzz5ScQP7yINc78DKc",
+      "object": "chat.completion.chunk",
+      "created": 1764958622,
+      "model": "gpt-4.1-nano-2025-04-14",
+      "service_tier": "default",
+      "system_fingerprint": "fp_1a97b5aa6c",
+      "choices": [
+        {
+          "index": 0,
+          "delta": {},
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "obfuscation": "d"
+    }
+  }
+]

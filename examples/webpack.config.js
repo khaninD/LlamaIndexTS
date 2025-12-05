@@ -10,6 +10,7 @@ export default {
     server: "./mcp/pg-server.ts",
     client: "./mcp/llama-client.ts",
     "foreign-pg-mcp": "./mcp/pg-foreign-mcp.ts",
+    "out-ts-mcp-server": "./mcp/out-mcp/postgres-mcp-server/src/index.ts",
   },
   output: {
     path: path.resolve(__dirname, "dist"),

@@ -3,14 +3,17 @@ import { mcp } from "@llamaindex/tools";
 import { agent } from "@llamaindex/workflow";
 import { createLoggedLLM, LLMLogger } from "./llm-logger";
 
-// Используем официальный PostgreSQL MCP сервер
 const pgServer = mcp({
-  command: "npx",
-  args: [
-    "@henkey/postgres-mcp-server",
-    "--connection-string",
-    "postgresql://postgres:postgres@localhost:5432/demo",
-  ],
+  command: "node",
+  args: ["D:\\LlamaIndexTS\\examples\\dist\\out-ts-mcp-server.bundle.js"],
+  env: {
+    PG_HOST: "localhost",
+    PG_PORT: "5432",
+    PG_USER: "postgres",
+    PG_PASSWORD: "postgres",
+    PG_DATABASE: "demo",
+  },
+  verbose: true,
 });
 
 async function main() {
@@ -24,7 +27,16 @@ async function main() {
 
   // System prompt для SQL аналитика
   const systemPrompt = `Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных PostgreSQL.
-  Используй  table_schema = 'bookings'
+  Инструменты:
+- list_schemas - показывает все доступные схемы
+- list_tables - показывает таблицы в конкретной схеме (параметр schema)
+- get_table_schema - структура таблицы
+- execute_sql - выполнение SQL
+Рекомендованная последовательность:
+1. Если нужно узнать о таблицах - сначала вызови list_schemas
+2. Затем list_tables для нужной схемы (или для каждой)
+3. Изучи структуру через get_table_schema
+4. Выполни запрос через execute_sql
   `;
 
   // Создаем логгер для отслеживания токенов
@@ -48,7 +60,7 @@ async function main() {
     // Опционально: сначала попросим изучить структуру БД
     console.log("📋 Step 1: Analyzing database structure...\n");
     const schemaAnalysis = await myAgent.run(
-      `Изучи базу данных, выведи все таблицы`,
+      `Какой самый дорогой билет, выведи всю полную информацию о нем.`,
     );
     console.log("Database structure analyzed:");
     console.log(schemaAnalysis.data.result);
