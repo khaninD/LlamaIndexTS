@@ -5,20 +5,17 @@
   "target": "node",
   "scripts": {
     "lint": "eslint .",
-    "start:mcp": "npx tsx ./mcp/new-server.ts",
-    "start:mcp-pg": "npx tsx ./mcp/pg-server.ts",
-    "start:client": "tsx ./mcp/client.ts",
-    "start:mcp:llama": "tsx ./mcp/llama-client.ts",
     "build": "webpack --config ./webpack.config.js",
-    "build:dev": "webpack --config ./webpack.config.js --mode=development",
-    "start": "node dist/server.bundle.js",
-    "dev": "npm run build:dev && npm start"
+    "build:dev": "webpack --config ./webpack.config.js --watch",
+    "start:client": "node dist/client.bundle.js",
+    "start:foreign-client": "node dist/foreign-pg-mcp.bundle.js"
   },
   "dependencies": {
     "@ai-sdk/openai": "^2.0.27",
     "@azure/cosmos": "^4.1.1",
     "@azure/identity": "^4.4.1",
     "@azure/search-documents": "^12.1.0",
+    "@henkey/postgres-mcp-server": "^1.0.5",
     "@llamaindex/anthropic": "^0.3.25",
     "@llamaindex/assemblyai": "^0.1.21",
     "@llamaindex/astra": "^0.0.36",
@@ -87,14 +84,15 @@
     "mcp-client": "^1.13.1"
   },
   "devDependencies": {
+    "@types/pg": "^8.15.6",
     "@types/express": "^5.0.3",
     "@types/node": "^24.0.13",
+    "ts-loader": "^9.4.4",
     "ts-node": "^10.9.2",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "webpack": "^5.88.0",
-    "webpack-cli": "^5.1.4",
-    "ts-loader": "^9.4.4"
+    "webpack-cli": "^5.1.4"
   },
   "stackblitz": {
     "startCommand": "npm start"

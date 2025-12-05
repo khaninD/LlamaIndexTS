@@ -49,18 +49,18 @@ async function main() {
 
   try {
     // Создаем LLM с логированием
-    const baseLLM = openai({ model: "gpt-4.1-nano" });
+    const baseLLM = openai({ model: "gpt-4.1" });
     const loggedLLM = createLoggedLLM(baseLLM, logger);
 
     const myAgent = agent({
       name: "Assistant",
       systemPrompt,
       tools,
-      llm: loggedLLM,
+      llm: baseLLM,
       verbose: true,
     });
 
-    const response = await myAgent.run("Сколько рейсов всего было совершено?");
+    const response = await myAgent.run("Какой самый дорогой билет?");
 
     console.log("RAW RESPONSE:", response);
     console.log("RESULT:", response.data.result);

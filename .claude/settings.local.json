@@ -1,12 +1,6 @@
 {
   "permissions": {
-    "allow": [
-      "Bash(cat:*)",
-      "Bash(pnpm build:*)",
-      "Bash(npx tsc:*)",
-      "Bash(npm run build:*)",
-      "Bash(npx eslint:*)"
-    ],
+    "allow": [],
     "deny": [],
     "ask": []
   }

@@ -24,7 +24,7 @@
     "./mcp/pg-server.ts",
     "./mcp/pg-server-new.ts",
     "./mcp/llama-client.ts",
-    "./mcp/llama-client-with-pg-mcp.ts",
+    "mcp/pg-foreign-mcp.ts",
     "./mcp/llm-logger.ts"
   ],
   "exclude": [

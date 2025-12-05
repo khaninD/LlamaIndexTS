@@ -7,10 +7,9 @@ export default {
   target: "node", // Важно для Node.js приложений
   mode: "production", // или 'development'
   entry: {
-    server: "./mcp/pg-server-new.ts",
-    "server-old": "./mcp/pg-server.ts",
+    server: "./mcp/pg-server.ts",
     client: "./mcp/llama-client.ts",
-    "client-pg-mcp": "./mcp/llama-client-with-pg-mcp.ts",
+    "foreign-pg-mcp": "./mcp/pg-foreign-mcp.ts",
   },
   output: {
     path: path.resolve(__dirname, "dist"),

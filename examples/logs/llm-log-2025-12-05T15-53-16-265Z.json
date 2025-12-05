@@ -1,0 +1,337 @@
+[
+  {
+    "timestamp": "2025-12-05T15:53:16.278Z",
+    "type": "request",
+    "model": "gpt-4.1-nano",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных PostgreSQL.\n    pg_manage_schema - инструмент для исследования бд, используй schema: bookings\n  "
+      },
+      {
+        "content": "Изучи базу данных  с помощью pg_manage_schema",
+        "role": "user"
+      }
+    ],
+    "tools": [
+      {
+        "name": "pg_manage_schema",
+        "description": "Manage PostgreSQL schema - get schema info, create/alter tables, manage enums. Examples: operation=\"get_info\" for table lists, operation=\"create_table\" with tableName and columns, operation=\"get_enums\" to list enums, operation=\"create_enum\" with enumName and values",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "connectionString": {
+              "type": "string",
+              "description": "PostgreSQL connection string (optional)"
+            },
+            "operation": {
+              "type": "string",
+              "enum": [
+                "get_info",
+                "create_table",
+                "alter_table",
+                "get_enums",
+                "create_enum"
+              ],
+              "description": "Operation: get_info (schema/table info), create_table (new table), alter_table (modify table), get_enums (list ENUMs), create_enum (new ENUM)"
+            },
+            "tableName": {
+              "type": "string",
+              "description": "Table name (optional for get_info to get specific table info, required for create_table/alter_table)"
+            },
+            "schema": {
+              "type": "string",
+              "description": "Schema name (defaults to public)"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "PostgreSQL data type"
+                  },
+                  "nullable": {
+                    "type": "boolean"
+                  },
+                  "default": {
+                    "type": "string",
+                    "description": "Default value expression"
+                  }
+                },
+                "required": ["name", "type"],
+                "additionalProperties": false
+              },
+              "description": "Column definitions (required for create_table)"
+            },
+            "operations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": ["add", "alter", "drop"]
+                  },
+                  "columnName": {
+                    "type": "string"
+                  },
+                  "dataType": {
+                    "type": "string",
+                    "description": "PostgreSQL data type (for add/alter)"
+                  },
+                  "nullable": {
+                    "type": "boolean",
+                    "description": "Whether the column can be NULL (for add/alter)"
+                  },
+                  "default": {
+                    "type": "string",
+                    "description": "Default value expression (for add/alter)"
+                  }
+                },
+                "required": ["type", "columnName"],
+                "additionalProperties": false
+              },
+              "description": "Alter operations (required for alter_table)"
+            },
+            "enumName": {
+              "type": "string",
+              "description": "ENUM name (optional for get_enums to filter, required for create_enum)"
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "ENUM values (required for create_enum)"
+            },
+            "ifNotExists": {
+              "type": "boolean",
+              "description": "Include IF NOT EXISTS clause (for create_enum)"
+            }
+          },
+          "required": ["operation"],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    ],
+    "tokensEstimate": {
+      "input": 835,
+      "output": 0,
+      "total": 835
+    }
+  },
+  {
+    "timestamp": "2025-12-05T15:53:17.508Z",
+    "type": "response",
+    "response": "",
+    "tokensEstimate": {
+      "input": 0,
+      "output": 0,
+      "total": 0
+    },
+    "raw": {
+      "id": "chatcmpl-CjSPMsBkmDYyBVqASMYlHqJkVpgjx",
+      "object": "chat.completion.chunk",
+      "created": 1764949996,
+      "model": "gpt-4.1-nano-2025-04-14",
+      "service_tier": "default",
+      "system_fingerprint": "fp_eb30fd4545",
+      "choices": [
+        {
+          "index": 0,
+          "delta": {},
+          "logprobs": null,
+          "finish_reason": "tool_calls"
+        }
+      ],
+      "obfuscation": "KgQCUyxffq4"
+    }
+  },
+  {
+    "timestamp": "2025-12-05T15:53:17.666Z",
+    "type": "request",
+    "model": "gpt-4.1-nano",
+    "messages": [
+      {
+        "role": "system",
+        "content": "Ты - SQL аналитик. Используй инструменты для выполнения запросов к базе данных PostgreSQL.\n    pg_manage_schema - инструмент для исследования бд, используй schema: bookings\n  "
+      },
+      {
+        "content": "Изучи базу данных  с помощью pg_manage_schema",
+        "role": "user"
+      },
+      {
+        "role": "assistant",
+        "content": "",
+        "options": {
+          "toolCall": [
+            {
+              "name": "pg_manage_schema",
+              "input": {
+                "operation": "get_info",
+                "schema": "bookings"
+              },
+              "id": "call_iHzFqYYvyf66cHDomkiHfTL1"
+            }
+          ]
+        }
+      },
+      {
+        "role": "user",
+        "content": "{\n  content: [\n    {\n      type: text,\n      text: List of tables in database\n    },\n    {\n      type: text,\n      text: []\n    }\n  ]\n}",
+        "options": {
+          "toolResult": {
+            "id": "call_iHzFqYYvyf66cHDomkiHfTL1",
+            "result": "{\n  content: [\n    {\n      type: text,\n      text: List of tables in database\n    },\n    {\n      type: text,\n      text: []\n    }\n  ]\n}",
+            "isError": false
+          }
+        }
+      }
+    ],
+    "tools": [
+      {
+        "name": "pg_manage_schema",
+        "description": "Manage PostgreSQL schema - get schema info, create/alter tables, manage enums. Examples: operation=\"get_info\" for table lists, operation=\"create_table\" with tableName and columns, operation=\"get_enums\" to list enums, operation=\"create_enum\" with enumName and values",
+        "parameters": {
+          "type": "object",
+          "properties": {
+            "connectionString": {
+              "type": "string",
+              "description": "PostgreSQL connection string (optional)"
+            },
+            "operation": {
+              "type": "string",
+              "enum": [
+                "get_info",
+                "create_table",
+                "alter_table",
+                "get_enums",
+                "create_enum"
+              ],
+              "description": "Operation: get_info (schema/table info), create_table (new table), alter_table (modify table), get_enums (list ENUMs), create_enum (new ENUM)"
+            },
+            "tableName": {
+              "type": "string",
+              "description": "Table name (optional for get_info to get specific table info, required for create_table/alter_table)"
+            },
+            "schema": {
+              "type": "string",
+              "description": "Schema name (defaults to public)"
+            },
+            "columns": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string",
+                    "description": "PostgreSQL data type"
+                  },
+                  "nullable": {
+                    "type": "boolean"
+                  },
+                  "default": {
+                    "type": "string",
+                    "description": "Default value expression"
+                  }
+                },
+                "required": ["name", "type"],
+                "additionalProperties": false
+              },
+              "description": "Column definitions (required for create_table)"
+            },
+            "operations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": ["add", "alter", "drop"]
+                  },
+                  "columnName": {
+                    "type": "string"
+                  },
+                  "dataType": {
+                    "type": "string",
+                    "description": "PostgreSQL data type (for add/alter)"
+                  },
+                  "nullable": {
+                    "type": "boolean",
+                    "description": "Whether the column can be NULL (for add/alter)"
+                  },
+                  "default": {
+                    "type": "string",
+                    "description": "Default value expression (for add/alter)"
+                  }
+                },
+                "required": ["type", "columnName"],
+                "additionalProperties": false
+              },
+              "description": "Alter operations (required for alter_table)"
+            },
+            "enumName": {
+              "type": "string",
+              "description": "ENUM name (optional for get_enums to filter, required for create_enum)"
+            },
+            "values": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "ENUM values (required for create_enum)"
+            },
+            "ifNotExists": {
+              "type": "boolean",
+              "description": "Include IF NOT EXISTS clause (for create_enum)"
+            }
+          },
+          "required": ["operation"],
+          "additionalProperties": false,
+          "$schema": "http://json-schema.org/draft-07/schema#"
+        }
+      }
+    ],
+    "tokensEstimate": {
+      "input": 880,
+      "output": 0,
+      "total": 880
+    }
+  },
+  {
+    "timestamp": "2025-12-05T15:53:18.698Z",
+    "type": "response",
+    "response": "В базе данных схемы \"bookings\" нет таблиц. Возможно, таблицы еще не созданы или есть необходимость их добавить. Хотите, чтобы я создал структуру таблиц или провел дополнительные исследования?",
+    "tokensEstimate": {
+      "input": 0,
+      "output": 64,
+      "total": 64
+    },
+    "raw": {
+      "id": "chatcmpl-CjSPNHdVdTnNzG5pBpOEvc1xBeBB2",
+      "object": "chat.completion.chunk",
+      "created": 1764949997,
+      "model": "gpt-4.1-nano-2025-04-14",
+      "service_tier": "default",
+      "system_fingerprint": "fp_eb30fd4545",
+      "choices": [
+        {
+          "index": 0,
+          "delta": {},
+          "logprobs": null,
+          "finish_reason": "stop"
+        }
+      ],
+      "obfuscation": "I"
+    }
+  }
+]
