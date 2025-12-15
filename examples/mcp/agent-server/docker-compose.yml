@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  llamaindex-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: llamaindex-agent-server
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=production
+      - PORT=3001
+      - OPENAI_MODEL=gpt-4o
+      - VERBOSE=false
+      # PostgreSQL connection (for MCP server)
+      - PGHOST=${PGHOST:-localhost}
+      - PGPORT=${PGPORT:-5432}
+      - PGDATABASE=${PGDATABASE}
+      - PGUSER=${PGUSER}
+      - PGPASSWORD=${PGPASSWORD}
+    env_file:
+      - .env
+    volumes:
+      # Mount MCP server bundle
+      - ../dist/server.bundle.js:/app/mcp-server/server.bundle.js:ro
+    restart: unless-stopped
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "require('http').get('http://localhost:3001/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})",
+        ]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    networks:
+      - llamaindex-network
+
+networks:
+  llamaindex-network:
+    driver: bridge
